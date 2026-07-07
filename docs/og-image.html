@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>SndBnch — OG image (1200×630)</title>
+<!--
+  Screenshot this at exactly 1200×630 to produce og-image.png:
+    (any headless-chrome / puppeteer setup)
+    await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 2 });
+    await page.goto('file://…/og-image.html'); await page.screenshot({ path: 'og-image.png' });
+-->
+<style>
+  * { box-sizing:border-box; margin:0; }
+  html,body { width:1200px; height:630px; }
+  body {
+    display:flex; flex-direction:column; justify-content:center; gap:22px;
+    padding:80px; color:#fbf6ee;
+    font-family: ui-rounded,"Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    background:
+      radial-gradient(120% 90% at 20% -20%, #221a30 0%, #17131f 60%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 3px, transparent 3px 6px);
+  }
+  .eyebrow { display:inline-flex; align-items:center; gap:12px; align-self:flex-start;
+    font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:22px;
+    color:#35c5d8; background:rgba(0,0,0,.28); padding:10px 20px; border-radius:999px;
+    border:1px dashed rgba(53,197,216,.5); }
+  .dot { width:12px; height:12px; border-radius:50%; background:#35c5d8; box-shadow:0 0 0 4px rgba(53,197,216,.25); }
+  h1 { font-size:118px; line-height:.92; letter-spacing:-3px; font-weight:800; }
+  .tag { font-size:44px; font-weight:700; color:#e3b24a; }
+  .pitch { font-size:30px; color:rgba(251,246,238,.9); max-width:900px; font-style:italic; }
+  .bars { position:absolute; right:70px; bottom:70px; display:flex; align-items:flex-end; gap:10px; height:170px; }
+  .bars i { width:14px; border-radius:7px; display:block; }
+</style>
+</head>
+<body>
+  <span class="eyebrow"><span class="dot"></span> Coming soon · Sovereign compute</span>
+  <h1>SndBnch</h1>
+  <p class="tag">Upload your music. We finish it.</p>
+  <p class="pitch">Finish + render your track into a video you can post anywhere — and make as many as you want.</p>
+  <div class="bars">
+    <i style="height:70px;background:#35c5d8"></i>
+    <i style="height:130px;background:#35c5d8"></i>
+    <i style="height:55px;background:#e3b24a"></i>
+    <i style="height:110px;background:#d6436b"></i>
+    <i style="height:85px;background:#d6436b"></i>
+    <i style="height:140px;background:#35c5d8"></i>
+    <i style="height:60px;background:#f2864b"></i>
+    <i style="height:100px;background:#d6436b"></i>
+  </div>
+</body>
+</html>

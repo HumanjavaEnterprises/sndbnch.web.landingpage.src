@@ -1,0 +1,17 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SndBnch">
+  <rect width="64" height="64" rx="15" fill="#17131f"/>
+  <!-- centre axis -->
+  <rect x="8" y="31" width="48" height="2" rx="1" fill="#5a4f5f"/>
+  <!-- EQ bars up (spectrum) -->
+  <rect x="14" y="20" width="4" height="11" rx="2" fill="#35c5d8"/>
+  <rect x="22" y="14" width="4" height="17" rx="2" fill="#35c5d8"/>
+  <rect x="30" y="23" width="4" height="8"  rx="2" fill="#e3b24a"/>
+  <rect x="38" y="17" width="4" height="14" rx="2" fill="#d6436b"/>
+  <rect x="46" y="21" width="4" height="10" rx="2" fill="#d6436b"/>
+  <!-- piano-roll fall down -->
+  <rect x="14" y="33" width="4" height="8"  rx="2" fill="#f2864b" opacity="0.85"/>
+  <rect x="22" y="33" width="4" height="13" rx="2" fill="#f2864b" opacity="0.85"/>
+  <rect x="30" y="33" width="4" height="6"  rx="2" fill="#f2864b" opacity="0.85"/>
+  <rect x="38" y="33" width="4" height="11" rx="2" fill="#f2864b" opacity="0.85"/>
+  <rect x="46" y="33" width="4" height="7"  rx="2" fill="#f2864b" opacity="0.85"/>
+</svg>

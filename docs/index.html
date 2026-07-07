@@ -1,154 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sound Bench</title>
-    <meta name="description" content="Make music with AI. 30 minutes. One session. Come back tomorrow.">
-    <meta property="og:title" content="Sound Bench">
-    <meta property="og:description" content="Make music with AI. 30 minutes. One session. Come back tomorrow.">
-    <meta property="og:image" content="https://sndbn.ch/og-image.png">
-    <meta property="og:url" content="https://sndbnch.com">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@vveerrgg">
-    <meta name="twitter:creator" content="@vveerrgg">
-    <meta name="twitter:title" content="Sound Bench">
-    <meta name="twitter:description" content="Make music with AI. 30 minutes. One session. Come back tomorrow.">
-    <meta name="twitter:image" content="https://sndbn.ch/og-image.png">
-    <meta property="og:site_name" content="Sound Bench">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SndBnch — upload your music, we finish it</title>
+  <meta name="description" content="Upload a track → master + spatial finish → a square or vertical video + cover → post it anywhere. Sovereign compute, so you can make as many as you want. Coming soon — get on the waitlist." />
 
-        :root {
-            --bg: #0c0a0f;
-            --bg-card: #14121a;
-            --text: #f0eff5;
-            --text-dim: #88839a;
-            --accent: #e8925a;
-            --accent-dim: #a0603a;
-            --border: #1e1b28;
-            --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
-        }
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="SndBnch — upload your music, we finish it" />
+  <meta property="og:description" content="Finish + render your track into a video you can post anywhere. Made on sovereign compute, so you can make as many as you want. Coming soon." />
+  <meta property="og:site_name" content="SndBnch" />
+  <meta property="og:locale" content="en" />
+  <meta property="og:url" content="https://sndbn.ch/" />
+  <meta property="og:image" content="https://sndbn.ch/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://sndbn.ch/og-image.png" />
 
-        body {
-            font-family: var(--font);
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .page {
-            max-width: 520px;
-            padding: 60px 24px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 2.4rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 12px;
-        }
-
-        h1 span { color: var(--accent); }
-
-        .tagline {
-            font-size: 1.1rem;
-            color: var(--text-dim);
-            margin-bottom: 48px;
-        }
-
-        .details {
-            text-align: left;
-            margin-bottom: 48px;
-        }
-
-        .detail {
-            padding: 16px 0;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-
-        .detail:last-child {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .detail-label {
-            color: var(--text-dim);
-            font-size: 0.85rem;
-        }
-
-        .detail-value {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .detail-value span { color: var(--accent); }
-
-        .bottom {
-            color: var(--text-dim);
-            font-size: 0.8rem;
-        }
-
-        .bottom a {
-            color: var(--text-dim);
-            text-decoration: none;
-        }
-
-        .bottom a:hover {
-            color: var(--accent);
-        }
-
-        @media (max-width: 480px) {
-            h1 { font-size: 1.8rem; }
-            .page { padding: 40px 20px; }
-        }
-    </style>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="page">
-        <h1>Sound <span>Bench</span></h1>
-        <p class="tagline">Make music with AI. 30 minutes. Come back tomorrow.</p>
+  <a class="skip-link" href="#waitlist">Skip to waitlist</a>
 
-        <div class="details">
-            <div class="detail">
-                <span class="detail-label">Sessions</span>
-                <span class="detail-value"><span>30</span> minutes</span>
-            </div>
-            <div class="detail">
-                <span class="detail-label">Cooldown</span>
-                <span class="detail-value"><span>25</span> hours</span>
-            </div>
-            <div class="detail">
-                <span class="detail-label">Artist slots</span>
-                <span class="detail-value"><span>7,777</span></span>
-            </div>
-            <div class="detail">
-                <span class="detail-label">Identity</span>
-                <span class="detail-value">Nostr</span>
-            </div>
-            <div class="detail">
-                <span class="detail-label">Derivatives</span>
-                <span class="detail-value">Free</span>
-            </div>
-            <div class="detail">
-                <span class="detail-label">User tiers</span>
-                <span class="detail-value">None</span>
-            </div>
-        </div>
+  <!-- ================= HERO ================= -->
+  <header class="hero" role="banner">
+    <div class="hero__inner">
+      <p class="hero__eyebrow"><span class="stitch-dot"></span> Coming soon · Sovereign compute</p>
+      <h1 class="hero__title">SndBnch</h1>
+      <p class="hero__tagline">Upload your music. We finish it.</p>
 
-        <p class="bottom">
-            A <a href="https://humanjava.com">Humanjava</a> project
-        </p>
+      <p class="hero__pitch">
+        Drop a track and get it back <strong>finished</strong>&mdash;mastered, given space, and
+        rendered into a square or vertical <strong>video&nbsp;+&nbsp;cover</strong> you can post anywhere.
+      </p>
+
+      <p class="hero__pitch hero__pitch--accent">
+        Make as many as you want. No credits, no meter, no fatigue.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#waitlist">Get on the waitlist</a>
+        <a class="btn btn--ghost" href="#how">How it works</a>
+      </div>
+
+      <p class="hero__note">🎛️ We&rsquo;ll tap you the moment the bench opens.</p>
     </div>
+    <div class="hero__fabric" aria-hidden="true"></div>
+  </header>
+
+  <main>
+    <!-- ================= HOW IT WORKS ================= -->
+    <section id="how" class="section section--how" aria-labelledby="how-title">
+      <div class="wrap">
+        <h2 id="how-title" class="section__title">From a raw track to something you can post</h2>
+        <p class="section__lede">
+          No DAW, no timeline, no plugins to learn. You pick a look and a sound; the bench does the finishing.
+        </p>
+
+        <ol class="beats">
+          <li class="beat">
+            <span class="beat__patch" aria-hidden="true">1</span>
+            <h3 class="beat__head">Drop your track</h3>
+            <p>Upload a file, or paste a link. Tick &ldquo;I hold the rights&rdquo; and you&rsquo;re in&mdash;no session to set up.</p>
+          </li>
+          <li class="beat">
+            <span class="beat__patch" aria-hidden="true">2</span>
+            <h3 class="beat__head">Finish it</h3>
+            <p>Pick a mastering template&mdash;<em>Streaming, Loud, Warm, Broadcast, Vinyl</em>&mdash;and a spatial feel. It comes out loud, clean, and translation-safe.</p>
+          </li>
+          <li class="beat">
+            <span class="beat__patch" aria-hidden="true">3</span>
+            <h3 class="beat__head">Render a video</h3>
+            <p>A layered visual&mdash;spectrogram, EQ, a key-driven colour wash&mdash;over your own art. Plus a matching square cover.</p>
+          </li>
+          <li class="beat">
+            <span class="beat__patch" aria-hidden="true">4</span>
+            <h3 class="beat__head">Post it anywhere</h3>
+            <p>Download the square and the vertical, drop them on the feed. Recognizably yours&mdash;and recognizably a SndBnch video.</p>
+          </li>
+          <li class="beat beat--wide">
+            <span class="beat__patch" aria-hidden="true">∞</span>
+            <h3 class="beat__head">Didn&rsquo;t nail it? Do it again. And again.</h3>
+            <p>Every other tool rations you&mdash;credits, watermarks on free, &ldquo;upgrade for more renders.&rdquo; We don&rsquo;t meter, because we&rsquo;re not renting the machine that makes them. Audition, cull, keep the one you love.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ================= WHY IT'S DIFFERENT ================= -->
+    <section class="section section--why" aria-labelledby="why-title">
+      <div class="wrap">
+        <h2 id="why-title" class="section__title">Why SndBnch can do what the others can&rsquo;t</h2>
+        <p class="section__lede">
+          Audiogram and waveform-video tools already exist. The difference isn&rsquo;t the feature&mdash;it&rsquo;s that we own the ground floor.
+        </p>
+
+        <div class="why-grid">
+          <div class="why-card">
+            <h3 class="why-card__head">We own the machine</h3>
+            <p>Everyone else renders on metered cloud GPUs, so they&rsquo;re forced to ration. Ours are sunk and sovereign&mdash;the cost of one more render is close to nothing. That&rsquo;s why &ldquo;make as many as you want&rdquo; is a promise we can actually keep.</p>
+          </div>
+          <div class="why-card">
+            <h3 class="why-card__head">A look people recognize</h3>
+            <p>Not the generic bouncing waveform. A layer compositor&mdash;a piano-roll spectrogram falling from a centre line, EQ spiking up, a stopwatch perimeter, a palette that shifts on the song&rsquo;s key changes.</p>
+          </div>
+          <div class="why-card">
+            <h3 class="why-card__head">Real finishing, not a filter</h3>
+            <p>Actual mastering templates plus stereo/binaural spatial&mdash;the kind of finish musicians already pay for. Kept mono-compatible on purpose, so it still holds up when a phone collapses it to mono.</p>
+          </div>
+          <div class="why-card">
+            <h3 class="why-card__head">Pay in cents, not subscriptions</h3>
+            <p>Because a render costs us almost nothing, we can charge per video&mdash;in card, or in sats over Lightning&mdash;instead of a monthly plan you forget to cancel. A generous free tier stays free.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WAITLIST ================= -->
+    <section id="waitlist" class="section section--waitlist" aria-labelledby="waitlist-title">
+      <div class="wrap wrap--narrow">
+        <span class="waitlist__patch" aria-hidden="true">✶</span>
+        <h2 id="waitlist-title" class="section__title">Be first on the bench</h2>
+        <p class="section__lede">
+          We&rsquo;re opening the doors soon. Leave your email and we&rsquo;ll let you know
+          the moment you can upload your first track.
+        </p>
+
+        <!-- Submitted via fetch (see the script at end of body): CASL double opt-in
+             through the SendRelay platform — POST /optin {email, purpose, consent, …}. -->
+        <form class="waitlist-form" action="https://api.sendrelay.app/optin" method="post">
+          <label class="waitlist-form__label" for="email">Email address</label>
+          <div class="waitlist-form__row">
+            <input
+              class="waitlist-form__input"
+              type="email"
+              id="email"
+              name="email"
+              inputmode="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            />
+            <button class="btn btn--primary" type="submit">Notify me</button>
+          </div>
+
+          <label class="waitlist-form__label" for="make">What do you make? (optional)</label>
+          <input
+            class="waitlist-form__input"
+            type="text"
+            id="make"
+            name="make"
+            placeholder="beats, songs, mixes, podcasts…"
+          />
+
+          <label class="waitlist-form__consent" style="display:flex;gap:9px;align-items:flex-start;margin:14px 0 0;font-size:.85rem;line-height:1.45;cursor:pointer;">
+            <input type="checkbox" id="consent" required style="margin:3px 0 0;flex:0 0 auto;width:16px;height:16px;accent-color:var(--spectrum);" />
+            <span id="consent-text">I agree to receive emails from SndBnch over the next 6 months about its launch and opening for uploads. We’ll email a link to confirm your address. See our <a href="privacy.html">Privacy</a> and <a href="terms.html">Terms</a>.</span>
+          </label>
+
+          <p class="waitlist-form__fine">
+            One note when the bench opens. No feed, no spam, unsubscribe anytime.
+          </p>
+        </form>
+
+        <p class="waitlist__sms">
+          Want to see what it makes first?
+          <a href="faq.html" style="color:var(--thread);font-weight:600;">Read the FAQ</a>
+          <span class="waitlist__sms-soon">— sample renders coming soon</span>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer" role="contentinfo">
+    <div class="wrap footer__inner">
+      <p class="footer__mark">SndBnch</p>
+      <p class="footer__tag">Own the ground floor. Make as many as you want.</p>
+      <nav class="footer__nav" aria-label="Footer">
+        <a href="faq.html">FAQ</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="#waitlist">Waitlist</a>
+      </nav>
+      <p class="footer__notice">
+        SndBnch is a <strong>tool, not a publisher</strong>. You upload music
+        <strong>you hold the rights to</strong>; we finish and render it and hand it
+        straight back to you. Uploads and renders live in a
+        <strong>short retention window</strong>, then they&rsquo;re gone&mdash;we
+        don&rsquo;t keep a library of your work.
+      </p>
+      <p class="footer__fine">
+        &copy; 2026 SndBnch · Humanjava Enterprises Inc. · sovereign compute
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Waitlist capture — posts JSON to the API, shows an inline thank-you.
+    // Falls back gracefully before the API is deployed (never a full-page nav).
+    (function () {
+      var form = document.querySelector('.waitlist-form');
+      if (!form) return;
+      var msg = document.createElement('p');
+      msg.className = 'waitlist-form__fine';
+      msg.setAttribute('role', 'status');
+      msg.style.fontWeight = '700';
+      form.appendChild(msg);
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = (form.querySelector('[name=email]') || {}).value || '';
+        var make = (form.querySelector('[name=make]') || {}).value || '';
+        var consent = form.querySelector('#consent');
+        email = email.trim();
+        if (email.indexOf('@') < 1) { msg.textContent = 'Please enter a valid email.'; return; }
+        if (!consent || !consent.checked) { msg.textContent = 'Please check the box to agree before continuing.'; return; }
+        var consentText = (document.getElementById('consent-text') || {}).textContent.trim();
+        msg.textContent = 'Sending your confirmation…';
+        // SndBnch runs its waitlist through the SendRelay platform (CASL double
+        // opt-in) — it writes no email infra of its own.
+        fetch('https://api.sendrelay.app/optin', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            email: email, purpose: 'sndbnch-waitlist', lang: 'en',
+            redirect: 'https://sndbn.ch/thanks.html',
+            consent: true, consent_text: consentText,
+            meta: { make: make.trim(), consent_window_months: 6 }
+          })
+        }).then(function (r) {
+          if (!r.ok) throw 0;
+          var els = form.querySelectorAll('input,button'); for (var i = 0; i < els.length; i++) els[i].disabled = true;
+          msg.textContent = 'Almost there — check your inbox and click the link to confirm.';
+        }).catch(function () {
+          msg.textContent = 'Something went wrong — please try again in a moment.';
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
