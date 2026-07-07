@@ -78,10 +78,10 @@ nav) before the API is reachable.
 
 ## Before launch (TODO)
 
-- [ ] Generate `docs/og-image.png` from `docs/og-image.html` (headless screenshot @ 1200×630) — until then the social card has no image.
-- [ ] `docs/apple-touch-icon.png` (referenced by `index.html`) — export from `favicon.svg`.
-- [ ] Confirm the SendRelay `sndbnch-waitlist` purpose exists on the API side.
-- [ ] Point `sndbnch.com` (and `sndbnch.ca`, if used) → redirect to `sndbn.ch`.
+- [x] `docs/og-image.png` + `docs/apple-touch-icon.png` — generated (headless Chrome) and live.
+- [x] SendRelay `sndbnch-waitlist` purpose — registered + branded (`confirm@sndbn.ch`), double opt-in + "already on the list" dedup live-verified in prod (2026-07-07).
+- [x] `sndbnch.com` → `sndbn.ch` 301 — provisioned (R53 + ACM + CloudFront `E37W2A882TPBG5`); live once CloudFront finishes deploying.
+- [ ] `sndbnch.ca` → `sndbn.ch` — **blocked:** the domain doesn't resolve / has no R53 zone (confirm it's registered + ours first). `soundbench.com` DNS is not on our R53 either.
 - [ ] (Optional) FR translation — the ecosystem convention is bilingual; SndBnch is global-first, so EN ships v0.
 - [ ] Expand `terms.html` / `privacy.html` from pre-launch drafts once uploads open (add the render data-retention detail from `sndbnch.bizdocs.src/product/data-policy.md`).
 
