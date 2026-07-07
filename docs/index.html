@@ -233,8 +233,19 @@
           })
         }).then(function (r) {
           if (!r.ok) throw 0;
+          return r.json().catch(function () { return {}; });
+        }).then(function (data) {
           var els = form.querySelectorAll('input,button'); for (var i = 0; i < els.length; i++) els[i].disabled = true;
-          msg.textContent = 'Almost there — check your inbox and click the link to confirm.';
+          // The opt-in service dedups per (email, purpose): if this address is
+          // already on THIS waitlist it tells us, so we confirm rather than send
+          // a misleading "check your inbox."
+          if (data && data.already) {
+            msg.textContent = data.status === 'confirmed'
+              ? 'You’re already on the list ✓ — we’ve got your email. We’ll tap you when the bench opens.'
+              : 'You’re already signed up — check your inbox for the confirmation link (it may take a minute).';
+          } else {
+            msg.textContent = 'Almost there — check your inbox and click the link to confirm.';
+          }
         }).catch(function () {
           msg.textContent = 'Something went wrong — please try again in a moment.';
         });
