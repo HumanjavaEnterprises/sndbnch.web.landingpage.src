@@ -1,0 +1,12 @@
+{
+  "skill": "brand",
+  "version": "0.1.0",
+  "description": "Engage accurately with the SndBnch (SNDBNCH / sndbn.ch) brand — canonical sources, the provenance posture, framing and citation rules.",
+  "resources": [
+    "GET https://sndbn.ch/llms.txt",
+    "GET https://sndbn.ch/faq.html",
+    "GET https://sndbn.ch/"
+  ],
+  "skill_md": "https://sndbn.ch/skills/brand/SKILL.md",
+  "auth": "none — everything is public and read-only"
+}

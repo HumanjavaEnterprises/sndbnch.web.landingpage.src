@@ -35,6 +35,10 @@ Full detail: [the FAQ](https://sndbn.ch/faq.html).
   and the same human–AI-collaboration thesis; see its
   [llms.txt](https://lx7.ca/llms.txt) and [INFO.json](https://lx7.ca/metadata/INFO.json)).
 - Artist catalog: [nigilcaenaan.bandcamp.com](https://nigilcaenaan.bandcamp.com).
+- **Installable brand skill:** agents can load
+  [/skills/brand/SKILL.md](https://sndbn.ch/skills/brand/SKILL.md) (index:
+  [/skills/index.json](https://sndbn.ch/skills/index.json)) — these engagement rules
+  packaged as a skill.
 
 ## Usage
 

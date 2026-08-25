@@ -1,0 +1,11 @@
+{
+  "status": "ok",
+  "service": "sndbn.ch skills",
+  "note": "Static, read-only skills. GitHub Pages serves files, not directory JSON — use the explicit paths below.",
+  "skills": {
+    "brand": {
+      "descriptor": "/skills/brand/skill.json",
+      "skill_md": "/skills/brand/SKILL.md"
+    }
+  }
+}
