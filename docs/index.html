@@ -21,6 +21,61 @@
 
 <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+<!-- Briefing for AI models -->
+<link rel="alternate" type="text/plain" title="llms.txt — briefing for AI models" href="https://sndbn.ch/llms.txt" />
+
+<!-- Structured data for search + AI crawlers (see also /llms.txt) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://sndbn.ch/#website",
+      "url": "https://sndbn.ch/",
+      "name": "SndBnch",
+      "alternateName": ["SNDBNCH", "sndbn.ch"],
+      "description": "A groove arcade — go from playing to grooving to making tunes. Compositions come from artist-provided material; AI involvement is declared per track.",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://sndbn.ch/#org" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://sndbn.ch/#org",
+      "name": "Humanjava Enterprises Inc.",
+      "url": "https://sndbn.ch/",
+      "logo": "https://sndbn.ch/apple-touch-icon.png",
+      "founder": { "@id": "https://sndbn.ch/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sndbn.ch/#person",
+      "name": "Vergel",
+      "alternateName": ["Vveerrgg", "Nigil Caenaan"],
+      "url": "https://lx7.ca/",
+      "sameAs": [
+        "https://lx7.ca/",
+        "https://x.com/vveerrgg",
+        "https://github.com/vveerrgg",
+        "https://nigilcaenaan.bandcamp.com"
+      ]
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://sndbn.ch/#app",
+      "name": "SndBnch — Groove Arcade",
+      "url": "https://sndbn.ch/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web",
+      "description": "A session-based music instrument: play the arcade, keep the best loops, render a song, build a square music video. Invite-only waves — join the waitlist.",
+      "image": "https://sndbn.ch/og-image.png",
+      "author": { "@id": "https://sndbn.ch/#person" },
+      "publisher": { "@id": "https://sndbn.ch/#org" }
+    }
+  ]
+}
+</script>
 <style>
   :root{
     --bg:#181818; --ink:#ececec; --dim:#9a9a9a; --line:#2c2c2c;
