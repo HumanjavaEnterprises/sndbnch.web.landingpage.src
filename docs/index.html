@@ -433,10 +433,35 @@
         note = document.getElementById('doorsNote'), cal = document.getElementById('doorsCal');
     var lastMin = -1;
 
+    // ⛔ Do NOT count down against the visitor's clock. Date.now() is whatever their
+    //    machine says, so winding the system clock forward opens the doors early.
+    //    Every HTTP response carries a `Date` header, so a cache-busted HEAD against
+    //    this page yields the SERVER's clock with no backend to build or run. We hold
+    //    the skew and apply it to every tick.
+    //
+    //    ⚠️ This makes the DISPLAY honest; it is not the gate. Anyone can edit the JS.
+    //    Whatever unlocks at zero must be enforced server-side, or this is theatre.
+    var skew = 0;                                   // serverNow - clientNow, ms
+    function now() { return Date.now() + skew; }
+
+    function syncClock() {
+      try {
+        // no-store + a cache-buster: a CDN-cached response carries a STALE Date, which
+        // would be worse than no sync at all.
+        return fetch(location.pathname + '?t=' + Date.now(),
+                     { method: 'HEAD', cache: 'no-store' })
+          .then(function (r) {
+            var d = Date.parse(r.headers.get('date') || '');
+            if (!isNaN(d)) skew = d - Date.now();
+          })
+          .catch(function () { /* offline or blocked → fall back to local time */ });
+      } catch (e) { return null; }
+    }
+
     function pad(n) { return (n < 10 ? '0' : '') + n; }
 
     function tick() {
-      var left = opens - Date.now();
+      var left = opens - now();
       if (left <= 0) {                              // doors are open — stop counting
         root.className = 'doors is-open';
         clock.textContent = 'Doors are open';
@@ -476,11 +501,19 @@
       cal.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
     }
 
+    // Start ticking straight away on local time so the clock is never blank, then
+    // correct as soon as the server's Date lands. A visitor with an accurate clock
+    // sees no change; a spoofed one gets snapped back within a second.
     if (tick()) {
       var id = setInterval(function () { if (!tick()) clearInterval(id); }, 1000);
-      // Wall-clock can drift while a tab is backgrounded; resync on return.
+      var s = syncClock();
+      if (s) s.then(tick);
+      // A backgrounded tab throttles timers AND may have been asleep for hours —
+      // re-sync against the server on return, not just re-render.
       document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) tick();
+        if (document.hidden) return;
+        var r = syncClock();
+        if (r) r.then(tick); else tick();
       });
     }
   }());
