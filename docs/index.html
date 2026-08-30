@@ -126,6 +126,23 @@
                    color:var(--dim);margin-bottom:6px}
   .joincard .btn{width:100%;text-align:center}
   .joincard .seatline{margin-top:6px;text-align:center}
+
+  /* ── doors countdown ──
+     Pure client-side: the open time is a fixed instant in `data-opens`, so there is no
+     state to fetch and nothing to keep in sync. Retime the drop by editing that one
+     attribute. Digits are tabular so the clock does not jitter as numbers change. */
+  .doors{border:1px solid var(--line);border-radius:5px;background:#101010;
+         padding:14px 16px;margin-bottom:4px}
+  .doors__label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+  .doors__clock{font-family:var(--mono);font-size:30px;color:var(--amber);margin-top:6px;
+                font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+  .doors__clock .u{font-size:12px;color:var(--dim);margin:0 7px 0 1px}
+  .doors__note{font-size:12.5px;line-height:1.55;color:var(--dim);margin-top:10px}
+  .doors__cal{display:inline-block;margin-top:9px;font-size:11px;letter-spacing:.14em;
+              text-transform:uppercase;color:var(--ink);border:1px solid var(--line);
+              border-radius:4px;padding:7px 11px;text-decoration:none}
+  .doors__cal:hover{border-color:var(--amber);color:var(--amber)}
+  .doors.is-open .doors__clock{color:var(--green);font-size:22px}
   @media(max-width:820px){
     .hero-grid{grid-template-columns:1fr;gap:30px}
     .joincard .btn{width:auto;display:inline-block}
@@ -250,6 +267,23 @@
         </div>
         <aside class="joincard">
           <div class="joincard__label">Season S001 · doors open soon</div>
+
+          <!-- Doors countdown. `data-opens` is the ONE thing to edit to retime the drop:
+               an ISO-8601 instant with an explicit offset (Z = UTC). Everything else is
+               derived. No JS? The <noscript> line below still states the open time. -->
+          <div class="doors" id="doors" data-opens="2026-08-31T21:00:00Z">
+            <div class="doors__label">Doors open in</div>
+            <div class="doors__clock" id="doorsClock" role="timer" aria-live="off">
+              <span id="dH">--</span><span class="u">h</span><span id="dM">--</span><span class="u">m</span><span id="dS">--</span><span class="u">s</span>
+            </div>
+            <p class="doors__note" id="doorsNote">
+              Put your music on the bench and make your own AI track.<br>
+              No waitlist — but you might want to set a calendar reminder.
+            </p>
+            <a class="doors__cal" id="doorsCal" href="#" download="sndbnch-doors.ics">Add calendar reminder</a>
+            <noscript><p class="doors__note">Doors open 2026-08-31 21:00 UTC.</p></noscript>
+          </div>
+
           <a class="btn" href="#waitlist">Claim a seat →</a>
           <a class="btn ghost" href="#how">See how it works</a>
           <span class="seatline">7 free · going fast</span>
@@ -381,6 +415,76 @@
   </div>
 
 <script>
+  // ── doors countdown ──────────────────────────────────────────────────────────
+  //    Counts down to the fixed instant in #doors[data-opens]. No server, no state:
+  //    a fixed target is pure arithmetic, and adding a backend for it would be a
+  //    liability (one more thing to be down) for zero gain.
+  //
+  //    The calendar button builds an .ics on the fly as a data URI, so the "set a
+  //    reminder" line in the copy is actionable without shipping a file or an API.
+  (function () {
+    var root = document.getElementById('doors');
+    if (!root) return;
+    var opens = Date.parse(root.getAttribute('data-opens') || '');
+    if (isNaN(opens)) return;                       // bad/missing date → leave the dashes
+
+    var hEl = document.getElementById('dH'), mEl = document.getElementById('dM'),
+        sEl = document.getElementById('dS'), clock = document.getElementById('doorsClock'),
+        note = document.getElementById('doorsNote'), cal = document.getElementById('doorsCal');
+    var lastMin = -1;
+
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+    function tick() {
+      var left = opens - Date.now();
+      if (left <= 0) {                              // doors are open — stop counting
+        root.className = 'doors is-open';
+        clock.textContent = 'Doors are open';
+        clock.setAttribute('aria-label', 'Doors are open');
+        note.innerHTML = 'Put your music on the bench and make your own AI track.';
+        if (cal) cal.style.display = 'none';
+        return false;
+      }
+      var s = Math.floor(left / 1000);
+      var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+      hEl.textContent = pad(h); mEl.textContent = pad(m); sEl.textContent = pad(s % 60);
+      // Announce on the MINUTE, not the second — a per-second aria update makes the
+      // page unusable with a screen reader.
+      if (m !== lastMin) {
+        lastMin = m;
+        clock.setAttribute('aria-label', h + ' hours ' + m + ' minutes until doors open');
+      }
+      return true;
+    }
+
+    function stamp(d) {                             // ICS wants YYYYMMDDTHHMMSSZ
+      return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+    }
+    if (cal) {
+      var start = new Date(opens), end = new Date(opens + 60 * 60 * 1000);
+      // CRLF is required by RFC 5545 — LF-only .ics files are rejected by some clients.
+      var ics = [
+        'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//sndbnch//doors//EN',
+        'BEGIN:VEVENT', 'UID:doors-' + opens + '@sndbn.ch', 'DTSTAMP:' + stamp(new Date()),
+        'DTSTART:' + stamp(start), 'DTEND:' + stamp(end),
+        'SUMMARY:sndbnch — doors open',
+        'DESCRIPTION:Put your music on the bench and make your own AI track.',
+        'URL:https://sndbn.ch/', 'BEGIN:VALARM', 'TRIGGER:-PT15M', 'ACTION:DISPLAY',
+        'DESCRIPTION:sndbnch doors open in 15 minutes', 'END:VALARM',
+        'END:VEVENT', 'END:VCALENDAR'
+      ].join('\r\n');
+      cal.href = 'data:text/calendar;charset=utf-8,' + encodeURIComponent(ics);
+    }
+
+    if (tick()) {
+      var id = setInterval(function () { if (!tick()) clearInterval(id); }, 1000);
+      // Wall-clock can drift while a tab is backgrounded; resync on return.
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) tick();
+      });
+    }
+  }());
+
   // ── waitlist capture — same SendRelay /optin as sndbn.ch, scoped to purpose
   //    'sndbnch-arcade' (own dedup bucket). CASL double opt-in. Never full-page nav.
   (function () {
