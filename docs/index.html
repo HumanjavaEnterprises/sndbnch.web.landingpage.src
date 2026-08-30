@@ -268,10 +268,14 @@
         <aside class="joincard">
           <div class="joincard__label">Season S001 · doors open soon</div>
 
-          <!-- Doors countdown. `data-opens` is the ONE thing to edit to retime the drop:
-               an ISO-8601 instant with an explicit offset (Z = UTC). Everything else is
-               derived. No JS? The <noscript> line below still states the open time. -->
-          <div class="doors" id="doors" data-opens="2026-08-31T21:00:00Z">
+          <!-- Doors countdown. The window is always a MULTIPLE OF SEVEN hours — that is
+               the house number (7 channels, 77 seats, 7x13 = the longest window). So the
+               config is an anchor plus a STEP COUNT, never a raw hour figure:
+                   data-anchor = when this window started (ISO-8601, Z = UTC)
+                   data-steps  = how many 7-hour steps  (4 => 7x4 = 28h)
+               Retime by changing data-steps; the seven stays structural instead of being
+               dissolved into a timestamp nobody can read the intent out of. -->
+          <div class="doors" id="doors" data-anchor="2026-08-30T17:00:00Z" data-steps="4">
             <div class="doors__label">Doors open in</div>
             <div class="doors__clock" id="doorsClock" role="timer" aria-live="off">
               <span id="dH">--</span><span class="u">h</span><span id="dM">--</span><span class="u">m</span><span id="dS">--</span><span class="u">s</span>
@@ -281,7 +285,11 @@
               No waitlist — but you might want to set a calendar reminder.
             </p>
             <a class="doors__cal" id="doorsCal" href="#" download="sndbnch-doors.ics">Add calendar reminder</a>
-            <noscript><p class="doors__note">Doors open 2026-08-31 21:00 UTC.</p></noscript>
+            <!-- No-JS fallback. Deliberately states the WINDOW, not a computed instant:
+                 an instant here would be a hand-copied duplicate of anchor+steps and
+                 would silently go stale the first time data-steps changes. -->
+            <noscript><p class="doors__note">Doors open 28 hours (7&times;4) after
+              2026-08-30 17:00 UTC.</p></noscript>
           </div>
 
           <a class="btn" href="#waitlist">Claim a seat →</a>
@@ -425,8 +433,15 @@
   (function () {
     var root = document.getElementById('doors');
     if (!root) return;
-    var opens = Date.parse(root.getAttribute('data-opens') || '');
-    if (isNaN(opens)) return;                       // bad/missing date → leave the dashes
+
+    // The window is ALWAYS a multiple of seven hours — never a raw hour count. Keeping
+    // SEVEN as a named constant means a retime can only ever land on 7, 14, 21 ... 91,
+    // which is the whole point of the mechanic.
+    var SEVEN = 7, MAX_STEPS = 13;                  // 7x13 = 91h, the longest window
+    var anchor = Date.parse(root.getAttribute('data-anchor') || '');
+    var steps  = parseInt(root.getAttribute('data-steps'), 10);
+    if (isNaN(anchor) || !(steps >= 1 && steps <= MAX_STEPS)) return;  // leave the dashes
+    var opens = anchor + steps * SEVEN * 3600 * 1000;
 
     var hEl = document.getElementById('dH'), mEl = document.getElementById('dM'),
         sEl = document.getElementById('dS'), clock = document.getElementById('doorsClock'),
