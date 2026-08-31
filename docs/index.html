@@ -128,9 +128,8 @@
   .joincard .seatline{margin-top:6px;text-align:center}
 
   /* ── doors countdown ──
-     Pure client-side: the open time is a fixed instant in `data-opens`, so there is no
-     state to fetch and nothing to keep in sync. Retime the drop by editing that one
-     attribute. Digits are tabular so the clock does not jitter as numbers change. */
+     The window is anchor + N x 7h (data-anchor / data-steps). Counts against SERVER
+     time, not the visitor's clock. Digits are tabular so the clock does not jitter. */
   .doors{border:1px solid var(--line);border-radius:5px;background:#101010;
          padding:14px 16px;margin-bottom:4px}
   .doors__label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
