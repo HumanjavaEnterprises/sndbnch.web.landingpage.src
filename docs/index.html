@@ -148,25 +148,6 @@
     .joincard{align-items:flex-start}
   }
 
-  /* ── the runner band (JetPack Joyride nod) ── */
-  .runner{margin-top:52px;height:150px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-          position:relative;overflow:hidden;
-          background:linear-gradient(180deg,#1d1d1d,#141414)}
-  .runner .ground{position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--line)}
-  .scroll{position:absolute;bottom:3px;left:0;height:100%;width:200%;
-          display:flex;animation:scroll 9s linear infinite}
-  @keyframes scroll{to{transform:translateX(-50%)}}
-  .tile{width:170px;height:100%;position:relative;flex:0 0 auto}
-  .cactus{position:absolute;bottom:0;width:14px;background:var(--green);border-radius:3px 3px 0 0}
-  .coin{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--amber);
-         box-shadow:0 0 0 2px rgba(232,163,61,.25)}
-  .runner .dino{position:absolute;bottom:3px;left:11%;width:34px;height:38px;background:var(--ink);
-       border-radius:5px 8px 4px 4px;animation:hop 1.1s ease-in-out infinite;z-index:2}
-  .runner .dino:after{content:"";position:absolute;right:-5px;top:8px;width:9px;height:9px;background:var(--ink);border-radius:2px}
-  .runner .dino:before{content:"";position:absolute;left:8px;top:9px;width:5px;height:5px;background:var(--bg);border-radius:50%}
-  @keyframes hop{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-46px)}}
-  .runner .cap{position:absolute;top:12px;right:16px;font-size:10px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
-
   /* ── section scaffolding ── */
   section{padding:70px 0;border-top:1px solid var(--line)}
   .eyebrow{font-size:11px;letter-spacing:.28em;color:var(--dim);text-transform:uppercase;margin-bottom:26px}
@@ -241,19 +222,61 @@
   /* ── on the bench: game 01 ── */
   .barlive{color:var(--amber);text-decoration:none;font-weight:700}
   .barlive:hover{text-decoration:underline}
-  #bench{padding:22px 0 10px}
+  #bench{padding:52px 0 10px}
   .benchcard{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,4vw,44px);
     align-items:center;margin-top:30px;text-align:left}
-  .benchshot{display:block;border:1px solid var(--line);border-radius:6px;overflow:hidden;
-    box-shadow:0 0 0 1px rgba(232,163,61,.12),0 18px 40px -18px rgba(0,0,0,.8);transition:transform .15s,border-color .15s}
-  .benchshot:hover{transform:translateY(-2px);border-color:var(--amber)}
-  .benchshot img{display:block;width:100%;height:auto}
+  /* ── the mini Slop Machine (the game's own cabinet, glyphs + neon — a link into it) ── */
+  .mini{--c:#22e6ff;--cd:#0a5f78;--m:#ff2d9b;--mp:#ff6ad9;--mi:#cfe8ff;--mm:#5b7a94;
+    display:block;text-decoration:none;color:var(--mi);position:relative;border-radius:14px;padding:14px 16px 16px;
+    border:1px solid #123a4d;font-family:'Share Tech Mono',ui-monospace,monospace;
+    background:radial-gradient(90% 60% at 50% 0%,rgba(34,230,255,.07),transparent 60%),
+      radial-gradient(80% 60% at 70% 110%,rgba(255,45,155,.08),transparent 60%),
+      linear-gradient(rgba(34,230,255,.05) 1px,transparent 1px) 0 0/28px 28px,
+      linear-gradient(90deg,rgba(34,230,255,.05) 1px,transparent 1px) 0 0/28px 28px,#05060d;
+    box-shadow:0 0 0 1px rgba(34,230,255,.08),0 0 40px -12px rgba(34,230,255,.35),0 24px 48px -20px rgba(0,0,0,.9);
+    transition:transform .15s,box-shadow .15s}
+  .mini:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(34,230,255,.3),0 0 50px -10px rgba(255,45,155,.45),0 24px 48px -20px rgba(0,0,0,.9)}
+  .mini:focus-visible{outline:2px solid var(--c);outline-offset:3px}
+  .mini__rail{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.3em;color:var(--mm)}
+  .mini__rail .sp{flex:1}
+  .mini__dot{width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c);animation:blink 1.4s infinite}
+  .mini__title{font-family:'Orbitron',var(--mono);font-weight:900;text-align:center;line-height:1.02;margin:12px 0 14px;
+    font-size:clamp(20px,3.1vw,30px);letter-spacing:.03em;color:#ffe3f6;
+    text-shadow:0 0 6px rgba(255,45,155,.9),0 0 18px rgba(255,45,155,.6),0 0 36px rgba(255,45,155,.35)}
+  .mini__title span{display:block;color:#e6fbff}
+  .mini__win{border:1px solid rgba(34,230,255,.45);border-radius:10px;padding:8px;position:relative;
+    box-shadow:inset 0 0 18px rgba(34,230,255,.12)}
+  .mini__reels{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .mini__reel{height:calc(var(--cell) * 3);--cell:clamp(46px,6.2vw,62px);overflow:hidden;border-radius:7px;
+    border:1px solid rgba(34,230,255,.28);background:linear-gradient(180deg,#06101a,#0a1826 50%,#06101a);
+    -webkit-mask:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent);mask:linear-gradient(180deg,transparent,#000 22%,#000 78%,transparent)}
+  .mini__strip{will-change:transform}
+  .mini__cell{height:var(--cell);display:flex;align-items:center;justify-content:center}
+  .mini__cell svg{width:52%;height:52%;fill:none;stroke:var(--m);stroke-width:4;stroke-linejoin:round;
+    filter:drop-shadow(0 0 4px rgba(255,45,155,.7))}
+  .mini__pay{position:absolute;left:4px;right:4px;top:50%;height:calc(var(--cell) + 2px);--cell:clamp(46px,6.2vw,62px);
+    transform:translateY(-50%);border-top:1px solid rgba(255,106,217,.55);border-bottom:1px solid rgba(255,106,217,.55);
+    box-shadow:0 0 14px rgba(255,45,155,.25);pointer-events:none}
+  .mini__labels{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:8px;text-align:center;
+    font-size:9px;letter-spacing:.14em;color:var(--cd);line-height:1.5}
+  .mini__labels b{display:block;color:#7fa9c4;font-weight:400}
+  .mini__status{margin-top:12px;padding:8px 10px;border-left:2px solid var(--m);background:rgba(255,45,155,.06);
+    font-size:10.5px;letter-spacing:.2em;color:var(--mp)}
+  .mini__engage{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:12px;padding:12px;
+    border:1px solid var(--m);border-radius:9px;font-family:'Orbitron',var(--mono);font-weight:900;font-size:17px;
+    letter-spacing:.12em;color:#fff;background:linear-gradient(180deg,rgba(255,45,155,.22),rgba(255,45,155,.08));
+    box-shadow:0 0 18px rgba(255,45,155,.35),inset 0 0 14px rgba(255,45,155,.2)}
+  .mini:hover .mini__engage{box-shadow:0 0 26px rgba(255,45,155,.6),inset 0 0 18px rgba(255,45,155,.3)}
+  @media (prefers-reduced-motion:reduce){.mini,.mini__dot{transition:none;animation:none}}
   .benchcopy p{margin:0 0 16px;font-size:15px;line-height:1.65;color:var(--dim)}
   .benchcopy p b{color:var(--ink);font-weight:600}
   .benchcopy .benchnote{font-size:12px;line-height:1.6;border-left:2px solid var(--amber);padding-left:12px}
   .benchcopy .cta{margin-top:22px}
   @media (max-width:760px){.benchcard{grid-template-columns:1fr}}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Share+Tech+Mono&display=swap">
 <!-- SendRelay family analytics: one tag for the whole domain family. -->
 <script defer src="https://analytics.sendrelay.app/f.js" data-family="fam_sndbnch"></script>
 </head>
@@ -313,12 +336,6 @@
         </aside>
       </div>
 
-      <div class="runner">
-        <span class="cap">Ch.1 — Runner</span>
-        <div class="dino"></div>
-        <div class="scroll" id="scroll"></div>
-        <div class="ground"></div>
-      </div>
     </header>
   </div>
 
@@ -327,16 +344,31 @@
       <div class="eyebrow"><b>On the bench</b> · game 01 · live now</div>
       <h2>The Slop Machine.</h2>
       <div class="benchcard">
-        <a class="benchshot" href="https://slopmachine.sndbnch.app/" target="_blank" rel="noopener">
-          <img src="https://slopmachine.sndbnch.app/og-slop.png" width="2400" height="1260" loading="lazy"
-               alt="The SndBnch Slop Machine: five neon reels, a winning payline and a looping waveform">
+        <a class="mini" id="mini" href="https://slopmachine.sndbnch.app/" target="_blank" rel="noopener"
+           aria-label="Play the SndBnch Slop Machine — five reels: drums, bass, melody, lead, vocals">
+          <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+            <g id="g-kore"><circle cx="50" cy="50" r="34"/><circle cx="50" cy="50" r="9"/><path d="M50 6V18M50 82V94M6 50H18M82 50H94"/></g>
+            <g id="g-spyre"><path d="M50 12 86 82 14 82Z"/><path d="M50 40 68 76 32 76Z"/></g>
+            <g id="g-halo"><path d="M14 50Q50 20 86 50Q50 80 14 50Z"/><circle cx="50" cy="50" r="9"/></g>
+            <g id="g-prysm"><path d="M50 10 86 30V70L50 90 14 70V30Z"/><path d="M50 50V10M50 50 14 70M50 50 86 70"/></g>
+            <g id="g-tyde"><path d="M8 40Q22 22 36 40T64 40 92 40"/><path d="M8 62Q22 44 36 62T64 62 92 62"/></g>
+            <g id="g-fang"><path d="M20 26 50 46 80 26M20 44 50 64 80 44M20 62 50 82 80 62"/></g>
+            <g id="g-gryd"><rect x="16" y="16" width="68" height="68"/><path d="M39 16V84M61 16V84M16 39H84M16 61H84"/></g>
+          </defs></svg>
+          <div class="mini__rail" aria-hidden="true"><span class="mini__dot"></span>IDLE<span class="sp"></span>SN 7C-4471-KX</div>
+          <div class="mini__title" aria-hidden="true">SndBnch<span>SLOP MACHINE</span></div>
+          <div class="mini__win" aria-hidden="true"><div class="mini__reels"><div class="mini__reel"><div class="mini__strip"><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-spyre"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-halo"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-fang"/></svg></div></div></div><div class="mini__reel"><div class="mini__strip"><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-kore"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-fang"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-gryd"/></svg></div></div></div><div class="mini__reel"><div class="mini__strip"><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-halo"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-gryd"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-spyre"/></svg></div></div></div><div class="mini__reel"><div class="mini__strip"><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-prysm"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-gryd"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-halo"/></svg></div></div></div><div class="mini__reel"><div class="mini__strip"><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-kore"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-gryd"/></svg></div><div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-tyde"/></svg></div></div></div></div><div class="mini__pay"></div></div>
+          <div class="mini__labels" aria-hidden="true"><span>R-01<b>DRUMS</b></span><span>R-02<b>BASS</b></span><span>R-03<b>MELODY</b></span><span>R-04<b>LEAD</b></span><span>R-05<b>VOCALS</b></span></div>
+          <div class="mini__status" aria-hidden="true">STATUS: IDLE // AWAITING INPUT</div>
+          <div class="mini__engage" aria-hidden="true">▶ ENGAGE</div>
         </a>
         <div class="benchcopy">
           <p>Five reels — <b>drums, bass, melody, lead, vocals</b>. Pick a genre, pull, and the payline
              mixes a <b>seamless loop</b> on the spot. Then play it: <b>hold</b> the reels you love and
              re-spin the rest, <b>solo</b> an element, flip between takes <b>on the bar</b> — and save the WAV.</p>
           <p class="benchnote">Straight about what's in it: the source loops are machine-generated by
-             <b>YuE2</b> (HKUST / Multimodal Art Projection) from our genre recipes — not artist material.
+             <b>ACE-Step 1.5</b> (ACE Studio &amp; StepFun) and <b>YuE2</b> (HKUST / Multimodal Art Projection)
+             from our genre recipes, then judged genre by genre — not artist material.
              It's a free, non-commercial demo of the bench. Fresh collection nightly at 12:01 PT.</p>
           <div class="cta">
             <a class="btn" href="https://slopmachine.sndbnch.app/" target="_blank" rel="noopener">Play the Slop Machine →</a>
@@ -612,16 +644,45 @@
     });
   })();
 
-  // build the endless-runner scenery (two identical halves = seamless loop)
-  const scroll = document.getElementById('scroll');
-  const half = [];
-  for(let t=0;t<8;t++){
-    const heights=[26,34,20,30];
-    const cactus=`<span class="cactus" style="left:${30+t*3}px;height:${heights[t%4]}px"></span>`;
-    const coins=[0,1,2].map(i=>`<span class="coin" style="left:${90+i*16}px;bottom:${58+Math.sin(t+i)*10}px"></span>`).join('');
-    half.push(`<div class="tile">${cactus}${coins}</div>`);
-  }
-  scroll.innerHTML = half.join('') + half.join('');
+  // ── the mini Slop Machine: reels spin + settle once when scrolled into view, and again
+  //    on hover — like the real cabinet. Static glyphs are the no-JS / reduced-motion view.
+  (function () {
+    var mini = document.getElementById('mini');
+    if (!mini || !window.matchMedia || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var G = ['kore','spyre','halo','prysm','tyde','fang','gryd'];
+    var strips = mini.querySelectorAll('.mini__strip');
+    function cell(g) { return '<div class="mini__cell"><svg viewBox="0 0 100 100"><use href="#g-' + g + '"/></svg></div>'; }
+    var busy = false;
+    function spin() {
+      if (busy) return; busy = true;
+      var done = 0;
+      strips.forEach(function (st, i) {
+        var keep = Array.prototype.map.call(st.children, function (c) { return c.outerHTML; }).slice(0, 3);
+        var n = 14 + i * 4, html = '';
+        for (var k = 0; k < n; k++) html += cell(G[Math.floor(Math.random() * G.length)]);
+        st.innerHTML = html + keep.join('');   // new faces on top, the old ones at the bottom
+        var h = st.firstElementChild.offsetHeight;
+        st.style.transition = 'none';
+        st.style.transform = 'translateY(' + (-n * h) + 'px)';
+        st.offsetHeight;                        // commit the start position
+        st.style.transition = 'transform ' + (0.9 + i * 0.22) + 's cubic-bezier(.15,.7,.25,1.04)';
+        st.style.transform = 'translateY(0)';
+        st.addEventListener('transitionend', function te() {
+          st.removeEventListener('transitionend', te);
+          st.innerHTML = Array.prototype.slice.call(st.children, 0, 3).map(function (c) { return c.outerHTML; }).join('');
+          st.style.transition = 'none'; st.style.transform = '';
+          if (++done === strips.length) busy = false;
+        });
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { io.disconnect(); setTimeout(spin, 250); }
+      }, { threshold: 0.5 });
+      io.observe(mini);
+    }
+    mini.addEventListener('mouseenter', spin);
+  })();
 </script>
 </body>
 </html>
