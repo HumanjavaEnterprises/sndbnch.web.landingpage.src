@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SndBnch Audio Editor</title>
+<meta name="description" content="Trim, fade, EQ, reverb and more — right in your browser. Your files never leave your device. Free, no account.">
+<meta property="og:title" content="SndBnch Audio Editor">
+<meta property="og:description" content="Edit audio clips in your browser — trim, fade, EQ, reverb, export. Nothing uploaded.">
+<link rel="icon" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="/">SndBn.ch</a>
+  <span class="tag">AUDIO EDITOR</span>
+  <span class="sp"></span>
+  <span class="priv">● 100% IN YOUR BROWSER · NOTHING UPLOADED</span>
+</header>
+
+<main>
+  <section id="drop" class="drop">
+    <div class="drop__inner">
+      <h1>Drop a clip to edit</h1>
+      <p>WAV · MP3 · OGG · M4A · FLAC — up to a few minutes. It stays on your device.</p>
+      <label class="btn btn--big">CHOOSE A FILE<input id="file" type="file" accept="audio/*" hidden></label>
+      <p class="fine">Trim, fade, normalize, EQ, reverb, echo, speed — export a clean WAV.</p>
+    </div>
+  </section>
+
+  <section id="edit" class="edit" hidden>
+    <div class="wavewrap">
+      <div id="wave"></div>
+      <div class="transport">
+        <button id="play" class="btn">▶ PLAY</button>
+        <button id="loop" class="btn btn--toggle">LOOP SEL</button>
+        <button id="selall" class="btn">SELECT ALL</button>
+        <button id="clearsel" class="btn">CLEAR SEL</button>
+        <span class="sp"></span>
+        <span id="meta" class="meta"></span>
+      </div>
+    </div>
+
+    <div class="rack">
+      <div class="panel">
+        <h2>EDIT</h2>
+        <div class="row">
+          <button class="btn" data-op="trim">TRIM TO SEL</button>
+          <button class="btn" data-op="cut">CUT SEL</button>
+          <button class="btn" data-op="silence">SILENCE SEL</button>
+          <button class="btn" data-op="reverse">REVERSE</button>
+        </div>
+        <div class="row">
+          <button class="btn" data-op="fadein">FADE IN</button>
+          <button class="btn" data-op="fadeout">FADE OUT</button>
+          <button class="btn" data-op="normalize">NORMALIZE</button>
+        </div>
+        <div class="knob">
+          <label>GAIN <b id="gainv">0.0 dB</b></label>
+          <input id="gain" type="range" min="-24" max="24" step="0.5" value="0">
+          <button class="btn btn--sm" data-op="gain">APPLY</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>EQ</h2>
+        <div class="knob"><label>LOW <b id="lowv">0 dB</b></label><input id="low" type="range" min="-18" max="18" step="1" value="0"></div>
+        <div class="knob"><label>MID <b id="midv">0 dB</b></label><input id="mid" type="range" min="-18" max="18" step="1" value="0"></div>
+        <div class="knob"><label>HIGH <b id="highv">0 dB</b></label><input id="high" type="range" min="-18" max="18" step="1" value="0"></div>
+        <button class="btn btn--sm" data-op="eq">APPLY EQ</button>
+      </div>
+
+      <div class="panel">
+        <h2>FILTER</h2>
+        <div class="knob"><label>LOW-PASS <b id="lpv">OFF</b></label><input id="lp" type="range" min="200" max="20000" step="100" value="20000"></div>
+        <div class="knob"><label>HIGH-PASS <b id="hpv">OFF</b></label><input id="hp" type="range" min="20" max="2000" step="10" value="20"></div>
+        <button class="btn btn--sm" data-op="filter">APPLY FILTER</button>
+      </div>
+
+      <div class="panel">
+        <h2>REVERB</h2>
+        <div class="knob"><label>SIZE <b id="rvszv">1.8 s</b></label><input id="rvsz" type="range" min="0.2" max="5" step="0.1" value="1.8"></div>
+        <div class="knob"><label>MIX <b id="rvmxv">25%</b></label><input id="rvmx" type="range" min="0" max="100" step="1" value="25"></div>
+        <button class="btn btn--sm" data-op="reverb">APPLY REVERB</button>
+      </div>
+
+      <div class="panel">
+        <h2>ECHO</h2>
+        <div class="knob"><label>TIME <b id="echtv">300 ms</b></label><input id="echt" type="range" min="40" max="1000" step="10" value="300"></div>
+        <div class="knob"><label>FEEDBACK <b id="echfv">35%</b></label><input id="echf" type="range" min="0" max="90" step="1" value="35"></div>
+        <div class="knob"><label>MIX <b id="echmv">30%</b></label><input id="echm" type="range" min="0" max="100" step="1" value="30"></div>
+        <button class="btn btn--sm" data-op="echo">APPLY ECHO</button>
+      </div>
+
+      <div class="panel">
+        <h2>SPEED</h2>
+        <p class="fine">Resamples — pitch moves with it (slowed / nightcore).</p>
+        <div class="knob"><label>RATE <b id="spdv">1.00×</b></label><input id="spd" type="range" min="0.5" max="2" step="0.01" value="1"></div>
+        <button class="btn btn--sm" data-op="speed">APPLY SPEED</button>
+      </div>
+    </div>
+
+    <div class="footbar">
+      <button id="undo" class="btn">↶ UNDO</button>
+      <button id="redo" class="btn">↷ REDO</button>
+      <button id="revert" class="btn">REVERT</button>
+      <span class="sp"></span>
+      <button id="newfile" class="btn">NEW FILE</button>
+      <button id="export" class="btn btn--primary">EXPORT WAV ↓</button>
+    </div>
+  </section>
+</main>
+
+<footer class="pagefoot">
+  <span>SndBn.ch</span><span>·</span><span>everything runs in your browser</span><span>·</span>
+  <a href="/audio_editor/vendor/ATTRIBUTION.txt">open-source credits</a>
+</footer>
+
+<div id="busy" class="busy" hidden><div class="busy__card">WORKING…</div></div>
+<div id="toast" class="toast" hidden></div>
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+Third-party, vendored verbatim, under their own licences:
+- wavesurfer.js v7 (wavesurfer.esm.js, plugins/regions.esm.js) — BSD-3-Clause — https://wavesurfer.xyz
+Everything else on this page is original and uses the browser's built-in Web Audio API (no library).
