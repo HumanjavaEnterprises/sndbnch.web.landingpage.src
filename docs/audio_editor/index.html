@@ -59,39 +59,51 @@
           <button class="btn" data-op="normalize">NORMALIZE</button>
         </div>
         <div class="knob">
-          <label>GAIN <b id="gainv">0.0 dB</b></label>
+          <label for="gain">GAIN <b id="gainv">0.0 dB</b></label>
           <input id="gain" type="range" min="-24" max="24" step="0.5" value="0">
           <button class="btn btn--sm" data-op="gain">APPLY</button>
         </div>
       </div>
 
       <div class="panel">
-        <h2>EQ</h2>
-        <div class="knob"><label>LOW <b id="lowv">0 dB</b></label><input id="low" type="range" min="-18" max="18" step="1" value="0"></div>
-        <div class="knob"><label>MID <b id="midv">0 dB</b></label><input id="mid" type="range" min="-18" max="18" step="1" value="0"></div>
-        <div class="knob"><label>HIGH <b id="highv">0 dB</b></label><input id="high" type="range" min="-18" max="18" step="1" value="0"></div>
+        <h2 id="eqh">EQ</h2>
+        <div class="faders" role="group" aria-labelledby="eqh">
+          <div class="vf"><input class="vfader" type="range" id="low" min="-18" max="18" step="1" value="0" aria-labelledby="lowl" aria-valuetext="0 dB"><span class="vf__v" id="lowv">0</span><label class="vf__l" id="lowl" for="low">LOW</label></div>
+          <div class="vf"><input class="vfader" type="range" id="mid" min="-18" max="18" step="1" value="0" aria-labelledby="midl" aria-valuetext="0 dB"><span class="vf__v" id="midv">0</span><label class="vf__l" id="midl" for="mid">MID</label></div>
+          <div class="vf"><input class="vfader" type="range" id="high" min="-18" max="18" step="1" value="0" aria-labelledby="highl" aria-valuetext="0 dB"><span class="vf__v" id="highv">0</span><label class="vf__l" id="highl" for="high">HIGH</label></div>
+        </div>
         <button class="btn btn--sm" data-op="eq">APPLY EQ</button>
       </div>
 
       <div class="panel">
-        <h2>FILTER</h2>
-        <div class="knob"><label>LOW-PASS <b id="lpv">OFF</b></label><input id="lp" type="range" min="200" max="20000" step="100" value="20000"></div>
-        <div class="knob"><label>HIGH-PASS <b id="hpv">OFF</b></label><input id="hp" type="range" min="20" max="2000" step="10" value="20"></div>
+        <h2 id="flh">FILTER</h2>
+        <div class="faders" role="group" aria-labelledby="flh">
+          <div class="vf"><input class="vfader" type="range" id="hp" min="20" max="2000" step="10" value="20" aria-labelledby="hpl" aria-valuetext="off"><span class="vf__v" id="hpv">OFF</span><label class="vf__l" id="hpl" for="hp">HI-PASS</label></div>
+          <div class="vf"><input class="vfader" type="range" id="lp" min="200" max="20000" step="100" value="20000" aria-labelledby="lpl" aria-valuetext="off"><span class="vf__v" id="lpv">OFF</span><label class="vf__l" id="lpl" for="lp">LO-PASS</label></div>
+        </div>
         <button class="btn btn--sm" data-op="filter">APPLY FILTER</button>
       </div>
 
       <div class="panel">
-        <h2>REVERB</h2>
-        <div class="knob"><label>SIZE <b id="rvszv">1.8 s</b></label><input id="rvsz" type="range" min="0.2" max="5" step="0.1" value="1.8"></div>
-        <div class="knob"><label>MIX <b id="rvmxv">25%</b></label><input id="rvmx" type="range" min="0" max="100" step="1" value="25"></div>
+        <h2 id="rvh">REVERB</h2>
+        <div class="xy" role="group" aria-labelledby="rvh">
+          <div class="xy__pad" id="rvpad" aria-hidden="true"><span class="xy__puck" id="rvpuck"></span><span class="xy__hint">drag</span></div>
+          <input class="vfader xy__y" type="range" id="rvmx" min="0" max="100" step="1" value="25" aria-label="Reverb mix, percent" aria-valuetext="25 percent">
+          <input class="xy__x" type="range" id="rvsz" min="0.2" max="5" step="0.1" value="1.8" aria-label="Reverb size, seconds" aria-valuetext="1.8 seconds">
+          <div class="xy__rd"><span>MIX <b id="rvmxv">25%</b></span><span>SIZE <b id="rvszv">1.8 s</b></span></div>
+        </div>
         <button class="btn btn--sm" data-op="reverb">APPLY REVERB</button>
       </div>
 
       <div class="panel">
-        <h2>ECHO</h2>
-        <div class="knob"><label>TIME <b id="echtv">300 ms</b></label><input id="echt" type="range" min="40" max="1000" step="10" value="300"></div>
-        <div class="knob"><label>FEEDBACK <b id="echfv">35%</b></label><input id="echf" type="range" min="0" max="90" step="1" value="35"></div>
-        <div class="knob"><label>MIX <b id="echmv">30%</b></label><input id="echm" type="range" min="0" max="100" step="1" value="30"></div>
+        <h2 id="ech">ECHO</h2>
+        <div class="xy" role="group" aria-labelledby="ech">
+          <div class="xy__pad" id="echpad" aria-hidden="true"><span class="xy__puck" id="echpuck"></span><span class="xy__hint">drag</span></div>
+          <input class="vfader xy__y" type="range" id="echf" min="0" max="90" step="1" value="35" aria-label="Echo feedback, percent" aria-valuetext="35 percent">
+          <input class="xy__x" type="range" id="echt" min="40" max="1000" step="10" value="300" aria-label="Echo time, milliseconds" aria-valuetext="300 milliseconds">
+          <div class="xy__rd"><span>FB <b id="echfv">35%</b></span><span>TIME <b id="echtv">300 ms</b></span></div>
+        </div>
+        <div class="knob"><label for="echm">MIX <b id="echmv">30%</b></label><input id="echm" type="range" min="0" max="100" step="1" value="30" aria-valuetext="30 percent"></div>
         <button class="btn btn--sm" data-op="echo">APPLY ECHO</button>
       </div>
 

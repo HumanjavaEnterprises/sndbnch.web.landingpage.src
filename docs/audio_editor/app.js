@@ -281,7 +281,29 @@ function exportWav() {
 }
 
 // ---------- wiring ----------
-function bindKnob(id, fmt) { const el = $(id), out = $(id + 'v'); const upd = () => { out.textContent = fmt(+el.value); }; el.addEventListener('input', upd); upd(); }
+function bindKnob(id, fmt) {
+  const el = $(id), out = $(id + 'v');
+  const upd = () => { const t = fmt(+el.value); out.textContent = t; el.setAttribute('aria-valuetext', t.replace(/[×%]/g, (m) => (m === '×' ? ' times' : ' percent'))); };
+  el.addEventListener('input', upd); upd();
+}
+// An XY pad that drives two real sliders (which stay the accessible, keyboard
+// control). The pad is pointer/touch only and aria-hidden; nobody is locked out.
+function bindXY(padId, puckId, xId, yId) {
+  const pad = $(padId), puck = $(puckId), xi = $(xId), yi = $(yId);
+  const frac = (el) => (+el.value - +el.min) / (+el.max - +el.min);
+  const place = () => { puck.style.left = `${frac(xi) * 100}%`; puck.style.bottom = `${frac(yi) * 100}%`; };
+  const fromEvent = (e) => {
+    const r = pad.getBoundingClientRect();
+    const fx = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    const fy = Math.min(1, Math.max(0, 1 - (e.clientY - r.top) / r.height));
+    const set = (el, f) => { const step = +el.step || 1; const raw = +el.min + f * (+el.max - +el.min); el.value = Math.round(raw / step) * step; el.dispatchEvent(new Event('input', { bubbles: true })); };
+    set(xi, fx); set(yi, fy); place();
+  };
+  pad.addEventListener('pointerdown', (e) => { try { pad.setPointerCapture(e.pointerId); } catch (_) {} fromEvent(e); });
+  pad.addEventListener('pointermove', (e) => { if (e.buttons || e.pressure) fromEvent(e); });
+  xi.addEventListener('input', place); yi.addEventListener('input', place);
+  place();
+}
 function init() {
   setupWave();
   $('file').addEventListener('change', (e) => { if (e.target.files[0]) loadFile(e.target.files[0]); });
@@ -306,12 +328,14 @@ function init() {
   $('export').addEventListener('click', exportWav);
 
   bindKnob('gain', (v) => `${v > 0 ? '+' : ''}${v.toFixed(1)} dB`);
-  [['low', 'low'], ['mid', 'mid'], ['high', 'high']].forEach(([id]) => bindKnob(id, (v) => `${v > 0 ? '+' : ''}${v} dB`));
+  ['low', 'mid', 'high'].forEach((id) => bindKnob(id, (v) => `${v > 0 ? '+' : ''}${v} dB`));
   bindKnob('lp', (v) => (v >= 20000 ? 'OFF' : `${(v / 1000).toFixed(1)} kHz`));
   bindKnob('hp', (v) => (v <= 20 ? 'OFF' : `${v} Hz`));
   bindKnob('rvsz', (v) => `${v.toFixed(1)} s`); bindKnob('rvmx', (v) => `${v}%`);
   bindKnob('echt', (v) => `${v} ms`); bindKnob('echf', (v) => `${v}%`); bindKnob('echm', (v) => `${v}%`);
   bindKnob('spd', (v) => `${v.toFixed(2)}×`);
+  bindXY('rvpad', 'rvpuck', 'rvsz', 'rvmx');
+  bindXY('echpad', 'echpuck', 'echt', 'echf');
 
   // loop the selection if LOOP SEL is on
   setInterval(() => { if (ws && ws._loop && region && ws.isPlaying()) { const t = ws.getCurrentTime(); if (t >= region.end || t < region.start - 0.02) ws.setTime(region.start); } }, 60);
