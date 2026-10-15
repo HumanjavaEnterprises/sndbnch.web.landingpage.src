@@ -85,18 +85,18 @@
       </div>
 
       <div class="panel">
-        <h2 id="rvh">REVERB</h2>
+        <h2 id="rvh">REVERB <span class="live">LIVE</span></h2>
         <div class="xy" role="group" aria-labelledby="rvh">
           <div class="xy__pad" id="rvpad" aria-hidden="true"><span class="xy__puck" id="rvpuck"></span><span class="xy__hint">drag</span></div>
           <input class="vfader xy__y" type="range" id="rvmx" min="0" max="100" step="1" value="25" aria-label="Reverb mix, percent" aria-valuetext="25 percent">
           <input class="xy__x" type="range" id="rvsz" min="0.2" max="5" step="0.1" value="1.8" aria-label="Reverb size, seconds" aria-valuetext="1.8 seconds">
           <div class="xy__rd"><span>MIX <b id="rvmxv">25%</b></span><span>SIZE <b id="rvszv">1.8 s</b></span></div>
         </div>
-        <button class="btn btn--sm" data-op="reverb">APPLY REVERB</button>
+        <button class="btn btn--sm btn--toggle" id="rvon" aria-pressed="false">REVERB: OFF</button>
       </div>
 
       <div class="panel">
-        <h2 id="ech">ECHO</h2>
+        <h2 id="ech">ECHO <span class="live">LIVE</span></h2>
         <div class="xy" role="group" aria-labelledby="ech">
           <div class="xy__pad" id="echpad" aria-hidden="true"><span class="xy__puck" id="echpuck"></span><span class="xy__hint">drag</span></div>
           <input class="vfader xy__y" type="range" id="echf" min="0" max="90" step="1" value="35" aria-label="Echo feedback, percent" aria-valuetext="35 percent">
@@ -104,7 +104,7 @@
           <div class="xy__rd"><span>FB <b id="echfv">35%</b></span><span>TIME <b id="echtv">300 ms</b></span></div>
         </div>
         <div class="knob"><label for="echm">MIX <b id="echmv">30%</b></label><input id="echm" type="range" min="0" max="100" step="1" value="30" aria-valuetext="30 percent"></div>
-        <button class="btn btn--sm" data-op="echo">APPLY ECHO</button>
+        <button class="btn btn--sm btn--toggle" id="echon" aria-pressed="false">ECHO: OFF</button>
       </div>
 
       <div class="panel">
