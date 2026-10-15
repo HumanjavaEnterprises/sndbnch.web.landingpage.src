@@ -1,0 +1,395 @@
+{
+  "schema": 2,
+  "week": "2026-W42",
+  "title": "2026-W42 · placeholder locations",
+  "key": "D dorian",
+  "created": "2026-10-15T03:40:28+00:00",
+  "sample_rate": 48000,
+  "channels": [
+    "atmos",
+    "low",
+    "mid",
+    "high",
+    "detail"
+  ],
+  "events": [
+    {
+      "id": "choir-a3",
+      "role": "mid",
+      "file": "events/choir-a3.m4a",
+      "seconds": 8.0,
+      "bytes": 98655,
+      "sha256": "60f11683d1e0af4a6703758314713d39c83dcc9a76bcda9d6b419737a08e2337"
+    },
+    {
+      "id": "choir-d4",
+      "role": "mid",
+      "file": "events/choir-d4.m4a",
+      "seconds": 8.0,
+      "bytes": 98617,
+      "sha256": "10cc086bf3465b92ae2fa9e04e7e94414fee361a1e3d3f04bd1953044d270fdb"
+    },
+    {
+      "id": "choir-e4",
+      "role": "mid",
+      "file": "events/choir-e4.m4a",
+      "seconds": 8.0,
+      "bytes": 98519,
+      "sha256": "5b5e564ea4234a33416928ad2f7e508c0c0370a8bdfc535a957f2a8c5e12defa"
+    },
+    {
+      "id": "piano-f3c4",
+      "role": "mid",
+      "file": "events/piano-f3c4.m4a",
+      "seconds": 9.0,
+      "bytes": 110818,
+      "sha256": "3d77ec59bcd50a6607d2b8a22a5cb416ab86c7c8b84c37b4693f47c5b570929e"
+    },
+    {
+      "id": "piano-a3e4",
+      "role": "mid",
+      "file": "events/piano-a3e4.m4a",
+      "seconds": 9.0,
+      "bytes": 110692,
+      "sha256": "4ec3b4cb96089be1bd2190232f66d054b3ec8a8dbdd0f9c42438644f4781de01"
+    },
+    {
+      "id": "swell-g3",
+      "role": "mid",
+      "file": "events/swell-g3.m4a",
+      "seconds": 10.0,
+      "bytes": 122843,
+      "sha256": "94e34e628a975c9d4d1c9c82d212fd377a4f35bcbc8125d02ce553c5e58dab9a"
+    },
+    {
+      "id": "swell-d3",
+      "role": "mid",
+      "file": "events/swell-d3.m4a",
+      "seconds": 10.0,
+      "bytes": 125480,
+      "sha256": "f75a12df9f8c4209587bedfe25440f23f687a4a8dec91bbf01dab7e278ae88ef"
+    },
+    {
+      "id": "swell-a3",
+      "role": "mid",
+      "file": "events/swell-a3.m4a",
+      "seconds": 10.0,
+      "bytes": 125094,
+      "sha256": "5d998e30efcb471c9d3907570e976d92cb6c7c0a866ca8cc945c4ebc1059f969"
+    },
+    {
+      "id": "drone-d2",
+      "role": "low",
+      "file": "events/drone-d2.m4a",
+      "seconds": 14.0,
+      "bytes": 173628,
+      "sha256": "a4eb678a28a09892d99f5ee956a0de0024302b5aed6065f988b46f10ee338283"
+    },
+    {
+      "id": "drone-a1",
+      "role": "low",
+      "file": "events/drone-a1.m4a",
+      "seconds": 14.0,
+      "bytes": 174969,
+      "sha256": "a798b7df456f8fa156eb64f54238b86982185a844a5bf83cc2b5c9309fca5ef2"
+    },
+    {
+      "id": "birds-1",
+      "role": "air",
+      "file": "events/birds-1.m4a",
+      "seconds": 2.6,
+      "bytes": 14953,
+      "sha256": "f6e3b2d1f1ceda7ab17ca96a20d952a7cef1c47bd0aae798e30d7faf50bab0d7"
+    },
+    {
+      "id": "lark",
+      "role": "air",
+      "file": "events/lark.m4a",
+      "seconds": 3.0,
+      "bytes": 22701,
+      "sha256": "0701724ac505fab109386a65cb4a63108fc6d9d7babf2377d908af4a7a314b8f"
+    },
+    {
+      "id": "page-turn",
+      "role": "event",
+      "file": "events/page-turn.m4a",
+      "seconds": 0.9,
+      "bytes": 12295,
+      "sha256": "36889f3b60fe09f4727cd08db6a06e11dfd1a5d3f3af1f33ce7914a987fa1022"
+    },
+    {
+      "id": "car-pass",
+      "role": "event",
+      "file": "events/car-pass.m4a",
+      "seconds": 7.0,
+      "bytes": 86478,
+      "sha256": "abb8853565246a0e94ce2f0278b50c217848d56a0e313707cbbd83bed20dc94f"
+    }
+  ],
+  "beds": [
+    {
+      "id": "wind-leaves",
+      "file": "beds/wind-leaves.m4a",
+      "seconds": 83.0,
+      "bytes": 1693695,
+      "sha256": "0cbdc5903e6901a1f4a9bc9209c94be4ac2dc9ff8327d8a618ca4d695e710673",
+      "loop": {
+        "start_frame": 0,
+        "end_frame": 3984000
+      }
+    },
+    {
+      "id": "meadow",
+      "file": "beds/meadow.m4a",
+      "seconds": 97.0,
+      "bytes": 2090085,
+      "sha256": "8476d5381c3e5a880bac9f5ebb61a70d1b5e729f646e98e87a2b0ac734af543b",
+      "loop": {
+        "start_frame": 0,
+        "end_frame": 4656000
+      }
+    },
+    {
+      "id": "room",
+      "file": "beds/room.m4a",
+      "seconds": 71.0,
+      "bytes": 1439435,
+      "sha256": "9826609661ede1215dc5c70a3699dbf01d19227d5b016b52150f217a400eaaf8",
+      "loop": {
+        "start_frame": 0,
+        "end_frame": 3408000
+      }
+    },
+    {
+      "id": "traffic",
+      "file": "beds/traffic.m4a",
+      "seconds": 89.0,
+      "bytes": 1802450,
+      "sha256": "f94ebce1412ccf78cf005d65310246263157475ba06677d9425fb20bccf87d76",
+      "loop": {
+        "start_frame": 0,
+        "end_frame": 4272000
+      }
+    }
+  ],
+  "locations": [
+    {
+      "id": "forest",
+      "name": "Forest",
+      "palette": [
+        "#13261c",
+        "#2f5a3c",
+        "#9cbf8a"
+      ],
+      "binaural": {
+        "carrier_hz": 146.83,
+        "beat_hz": 10.0,
+        "band": "alpha"
+      },
+      "channels": [
+        {
+          "channel": "atmos",
+          "bed": "wind-leaves",
+          "gain": 0.55
+        },
+        {
+          "channel": "low",
+          "event": "drone-d2",
+          "period_s": 37.1,
+          "gain": 0.5
+        },
+        {
+          "channel": "mid",
+          "event": "choir-a3",
+          "period_s": 23.9,
+          "gain": 0.45
+        },
+        {
+          "channel": "high",
+          "event": "choir-d4",
+          "period_s": 31.7,
+          "gain": 0.4
+        },
+        {
+          "channel": "detail",
+          "event": "birds-1",
+          "period_s": 11.3,
+          "gain": 0.3
+        }
+      ]
+    },
+    {
+      "id": "fields",
+      "name": "Fields",
+      "palette": [
+        "#2e2a12",
+        "#9c8436",
+        "#e9dba2"
+      ],
+      "binaural": {
+        "carrier_hz": 146.83,
+        "beat_hz": 6.0,
+        "band": "theta"
+      },
+      "channels": [
+        {
+          "channel": "atmos",
+          "bed": "meadow",
+          "gain": 0.5
+        },
+        {
+          "channel": "low",
+          "event": "drone-a1",
+          "period_s": 41.3,
+          "gain": 0.45
+        },
+        {
+          "channel": "mid",
+          "event": "swell-g3",
+          "period_s": 29.7,
+          "gain": 0.4
+        },
+        {
+          "channel": "high",
+          "event": "choir-e4",
+          "period_s": 23.3,
+          "gain": 0.4
+        },
+        {
+          "channel": "detail",
+          "event": "lark",
+          "period_s": 13.7,
+          "gain": 0.25
+        }
+      ]
+    },
+    {
+      "id": "library",
+      "name": "Library",
+      "palette": [
+        "#1e1712",
+        "#5c432c",
+        "#c7a57a"
+      ],
+      "binaural": {
+        "carrier_hz": 146.83,
+        "beat_hz": 14.0,
+        "band": "beta"
+      },
+      "channels": [
+        {
+          "channel": "atmos",
+          "bed": "room",
+          "gain": 0.4
+        },
+        {
+          "channel": "low",
+          "event": "drone-d2",
+          "period_s": 43.7,
+          "gain": 0.3
+        },
+        {
+          "channel": "mid",
+          "event": "piano-f3c4",
+          "period_s": 17.3,
+          "gain": 0.45
+        },
+        {
+          "channel": "high",
+          "event": "piano-a3e4",
+          "period_s": 23.9,
+          "gain": 0.4
+        },
+        {
+          "channel": "detail",
+          "event": "page-turn",
+          "period_s": 19.1,
+          "gain": 0.25
+        }
+      ]
+    },
+    {
+      "id": "street",
+      "name": "Street",
+      "palette": [
+        "#14171d",
+        "#38404e",
+        "#8b97aa"
+      ],
+      "binaural": {
+        "carrier_hz": 146.83,
+        "beat_hz": 12.0,
+        "band": "alpha/beta"
+      },
+      "channels": [
+        {
+          "channel": "atmos",
+          "bed": "traffic",
+          "gain": 0.5
+        },
+        {
+          "channel": "low",
+          "event": "drone-d2",
+          "period_s": 39.7,
+          "gain": 0.45
+        },
+        {
+          "channel": "mid",
+          "event": "swell-d3",
+          "period_s": 29.3,
+          "gain": 0.4
+        },
+        {
+          "channel": "high",
+          "event": "swell-a3",
+          "period_s": 23.1,
+          "gain": 0.35
+        },
+        {
+          "channel": "detail",
+          "event": "car-pass",
+          "period_s": 21.7,
+          "gain": 0.3
+        }
+      ]
+    }
+  ],
+  "journeys": [
+    {
+      "id": "forest-fields",
+      "name": "Forest ↔ Fields",
+      "loop": true,
+      "transition_s": 90,
+      "steps": [
+        {
+          "location": "forest",
+          "dwell_s": 300
+        },
+        {
+          "location": "fields",
+          "dwell_s": 300
+        }
+      ]
+    },
+    {
+      "id": "library-street-forest",
+      "name": "Library → Street → Forest",
+      "loop": false,
+      "transition_s": 90,
+      "steps": [
+        {
+          "location": "library",
+          "dwell_s": 240
+        },
+        {
+          "location": "street",
+          "dwell_s": 240
+        },
+        {
+          "location": "forest",
+          "dwell_s": 0
+        }
+      ]
+    }
+  ]
+}
