@@ -83,13 +83,13 @@ input[type=range]{accent-color:var(--c)}
 /* ---- vertical faders (EQ, filter, XY y-axis) ---- */
 .faders{display:flex;gap:16px;justify-content:center;align-items:flex-end;margin:6px 0 14px}
 .vf{display:flex;flex-direction:column;align-items:center;gap:6px}
-.vfader{writing-mode:vertical-lr;direction:rtl;width:30px;height:150px;accent-color:var(--c);cursor:ns-resize;touch-action:none}
+input[type=range].vfader{writing-mode:vertical-lr;direction:rtl;width:34px;height:240px;accent-color:var(--c);cursor:ns-resize;touch-action:none}
 .vf__v{font-size:12px;color:var(--ink);min-height:16px}
 .vf__l{font-size:10px;letter-spacing:.14em;color:var(--dim)}
 
 /* ---- XY pad: pad top, Y slider left, X slider bottom, readout under ---- */
 .xy{display:grid;grid-template-columns:34px 1fr;grid-template-rows:1fr 34px auto;gap:6px;margin:6px 0 14px;align-items:center}
-.xy__pad{grid-column:2;grid-row:1;position:relative;height:150px;border:1px solid var(--line);border-radius:10px;
+.xy__pad{grid-column:2;grid-row:1;position:relative;height:240px;border:1px solid var(--line);border-radius:10px;
   background:
     radial-gradient(120% 120% at 100% 0%,rgba(34,230,255,.10),transparent 60%),
     linear-gradient(0deg,rgba(255,45,155,.06),transparent),#0e0e0e;
@@ -97,7 +97,7 @@ input[type=range]{accent-color:var(--c)}
 .xy__puck{position:absolute;width:20px;height:20px;border-radius:50%;background:var(--c);
   box-shadow:0 0 12px rgba(34,230,255,.7);transform:translate(-50%,50%);left:50%;bottom:25%;pointer-events:none}
 .xy__hint{position:absolute;top:6px;right:8px;font-size:9px;letter-spacing:.2em;color:var(--dim);pointer-events:none}
-.xy__y{grid-column:1;grid-row:1;height:150px;justify-self:center}
+input[type=range].xy__y{grid-column:1;grid-row:1;height:240px;justify-self:center}
 .xy__x{grid-column:2;grid-row:2;width:100%;accent-color:var(--c);touch-action:none}
 .xy__rd{grid-column:1 / 3;grid-row:3;display:flex;justify-content:space-between;font-size:11px;letter-spacing:.08em;color:var(--dim)}
 .xy__rd b{color:var(--ink);font-weight:400}
