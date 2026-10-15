@@ -257,6 +257,85 @@ function opSpeed() {
   processRange((ctx, src) => { src.playbackRate.value = rate; return src; }, 1 / rate);
 }
 
+// ---------- live FX on playback (reverb + echo) ----------
+// Playback is routed media element -> reverb stage -> echo stage -> output.
+// Each stage is bypassed (wet 0, dry 1) when off, so toggling is click-free, and
+// the XY pads drive the live AudioParams while the clip plays.
+let fxCtx = null, srcEl = null, mediaSrc = null;
+const rv = {}; const ec = {};
+const fxOn = { reverb: false, echo: false };
+
+function buildFxNodes() {
+  const c = fxCtx;
+  rv.in = c.createGain(); rv.conv = c.createConvolver(); rv.wet = c.createGain(); rv.dry = c.createGain(); rv.out = c.createGain();
+  rv.conv.buffer = makeImpulse(c, +$('rvsz').value);
+  rv.in.connect(rv.dry).connect(rv.out);
+  rv.in.connect(rv.conv).connect(rv.wet).connect(rv.out);
+  ec.in = c.createGain(); ec.delay = c.createDelay(1.2); ec.fb = c.createGain(); ec.wet = c.createGain(); ec.dry = c.createGain(); ec.out = c.createGain();
+  ec.delay.delayTime.value = +$('echt').value / 1000;
+  ec.in.connect(ec.dry).connect(ec.out);
+  ec.in.connect(ec.delay); ec.delay.connect(ec.fb).connect(ec.delay); ec.delay.connect(ec.wet).connect(ec.out);
+  rv.out.connect(ec.in); ec.out.connect(c.destination);
+  applyFxParams();
+}
+function ensureGraph() {
+  const el = ws.getMediaElement && ws.getMediaElement();
+  if (!el) return;
+  if (!fxCtx) { fxCtx = new AC(); buildFxNodes(); }
+  if (fxCtx.state === 'suspended') fxCtx.resume();
+  if (srcEl !== el) {
+    try { mediaSrc = fxCtx.createMediaElementSource(el); } catch (_) { return; }
+    srcEl = el; mediaSrc.connect(rv.in);
+  }
+}
+// Set the live gains from the sliders + on/off state (no-op before the graph exists).
+function applyFxParams() {
+  if (!fxCtx) return;
+  const t = fxCtx.currentTime, ramp = (p, v) => p.setTargetAtTime(v, t, 0.02);
+  const rmix = +$('rvmx').value / 100;
+  ramp(rv.wet.gain, fxOn.reverb ? rmix : 0);
+  ramp(rv.dry.gain, fxOn.reverb ? 1 - rmix * 0.6 : 1);
+  const emix = +$('echm').value / 100;
+  ramp(ec.delay.delayTime, +$('echt').value / 1000);
+  ramp(ec.fb.gain, fxOn.echo ? +$('echf').value / 100 : 0);
+  ramp(ec.wet.gain, fxOn.echo ? emix : 0);
+  ramp(ec.dry.gain, 1);
+}
+function setReverbSize() { if (fxCtx) rv.conv.buffer = makeImpulse(fxCtx, +$('rvsz').value); }
+function toggleFx(which, btn) {
+  ensureGraph();
+  fxOn[which] = !fxOn[which];
+  btn.classList.toggle('on', fxOn[which]);
+  btn.setAttribute('aria-pressed', String(fxOn[which]));
+  btn.textContent = `${which.toUpperCase()}: ${fxOn[which] ? 'ON' : 'OFF'}`;
+  applyFxParams();
+}
+
+// Render `buf` through the enabled FX offline, so the export matches what you hear.
+async function bakeFx(buf) {
+  if (!fxOn.reverb && !fxOn.echo) return buf;
+  const extra = fxOn.echo ? Math.ceil(buf.sampleRate * ((+$('echt').value / 1000) * 4 + 0.5)) : (fxOn.reverb ? Math.ceil(buf.sampleRate * +$('rvsz').value) : 0);
+  const c = new OfflineAudioContext(buf.numberOfChannels, buf.length + extra, buf.sampleRate);
+  const src = c.createBufferSource(); src.buffer = buf;
+  let node = src;
+  if (fxOn.reverb) {
+    const conv = c.createConvolver(); conv.buffer = makeImpulse(c, +$('rvsz').value);
+    const wet = c.createGain(); const dry = c.createGain(); const out = c.createGain();
+    const mix = +$('rvmx').value / 100; wet.gain.value = mix; dry.gain.value = 1 - mix * 0.6;
+    node.connect(dry).connect(out); node.connect(conv).connect(wet).connect(out); node = out;
+  }
+  if (fxOn.echo) {
+    const d = c.createDelay(1.2); d.delayTime.value = +$('echt').value / 1000;
+    const fb = c.createGain(); fb.gain.value = +$('echf').value / 100;
+    const wet = c.createGain(); wet.gain.value = +$('echm').value / 100; const out = c.createGain();
+    node.connect(out); node.connect(d); d.connect(fb).connect(d); d.connect(wet).connect(out); node = out;
+  }
+  node.connect(c.destination); src.start();
+  const rendered = await c.startRendering();
+  const chans = []; for (let ch = 0; ch < buf.numberOfChannels; ch += 1) chans.push(rendered.getChannelData(Math.min(ch, rendered.numberOfChannels - 1)));
+  return bufferFromChannels(chans, buf.sampleRate);
+}
+
 // ---------- export (WAV) ----------
 function bufferToWav(buf) {
   const n = buf.numberOfChannels, len = buf.length, sr = buf.sampleRate;
@@ -273,11 +352,15 @@ function bufferToWav(buf) {
 }
 const bufferToWavBlob = (buf) => new Blob([bufferToWav(buf)], { type: 'audio/wav' });
 
-function exportWav() {
-  const url = URL.createObjectURL(bufferToWavBlob(buffer));
-  const a = document.createElement('a');
-  a.href = url; a.download = `${fileName}_edited.wav`; a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+async function exportWav() {
+  busy(true);
+  try {
+    const out = await bakeFx(buffer);
+    const url = URL.createObjectURL(bufferToWavBlob(out));
+    const a = document.createElement('a');
+    a.href = url; a.download = `${fileName}_edited.wav`; a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  } finally { busy(false); }
 }
 
 // ---------- wiring ----------
@@ -312,13 +395,13 @@ function init() {
   ['dragleave', 'drop'].forEach((ev) => drop.addEventListener(ev, (e) => { e.preventDefault(); drop.classList.remove('over'); }));
   drop.addEventListener('drop', (e) => { const f = e.dataTransfer.files[0]; if (f) loadFile(f); });
 
-  $('play').addEventListener('click', () => ws.playPause());
+  $('play').addEventListener('click', () => { ensureGraph(); ws.playPause(); });
   $('loop').addEventListener('click', (e) => { ws._loop = !ws._loop; e.target.classList.toggle('on', ws._loop); });
   ws && null;
   $('selall').addEventListener('click', () => { regions.getRegions().forEach((r) => r.remove()); region = regions.addRegion({ start: 0, end: buffer.duration, color: 'rgba(34,230,255,0.14)' }); });
   $('clearsel').addEventListener('click', () => { regions.getRegions().forEach((r) => r.remove()); region = null; });
 
-  const ops = { trim: opTrim, cut: opCut, silence: opSilence, reverse: opReverse, fadein: () => opFade('in'), fadeout: () => opFade('out'), normalize: opNormalize, gain: () => opGain(+$('gain').value), eq: opEq, filter: opFilter, reverb: opReverb, echo: opEcho, speed: opSpeed };
+  const ops = { trim: opTrim, cut: opCut, silence: opSilence, reverse: opReverse, fadein: () => opFade('in'), fadeout: () => opFade('out'), normalize: opNormalize, gain: () => opGain(+$('gain').value), eq: opEq, filter: opFilter,  speed: opSpeed };
   document.querySelectorAll('[data-op]').forEach((b) => b.addEventListener('click', () => ops[b.dataset.op]()));
 
   $('undo').addEventListener('click', () => { if (!undoStack.length) return; redoStack.push(buffer); buffer = undoStack.pop(); render(); });
@@ -336,6 +419,11 @@ function init() {
   bindKnob('spd', (v) => `${v.toFixed(2)}×`);
   bindXY('rvpad', 'rvpuck', 'rvsz', 'rvmx');
   bindXY('echpad', 'echpuck', 'echt', 'echf');
+  $('rvon').addEventListener('click', (e) => toggleFx('reverb', e.currentTarget));
+  $('echon').addEventListener('click', (e) => toggleFx('echo', e.currentTarget));
+  $('rvsz').addEventListener('input', setReverbSize);
+  ['rvmx', 'echt', 'echf', 'echm'].forEach((id) => $(id).addEventListener('input', applyFxParams));
+  $('rvsz').addEventListener('input', applyFxParams);
 
   // loop the selection if LOOP SEL is on
   setInterval(() => { if (ws && ws._loop && region && ws.isPlaying()) { const t = ws.getCurrentTime(); if (t >= region.end || t < region.start - 0.02) ws.setTime(region.start); } }, 60);
