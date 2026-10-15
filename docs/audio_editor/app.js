@@ -82,6 +82,9 @@ async function loadFile(file) {
 
 function render() {
   region = null;
+  // Reloading the clip stops playback, so the transport must read PLAY again.
+  if (ws.isPlaying()) ws.pause();
+  $('play').textContent = '\u25B6 PLAY';
   ws.loadBlob(bufferToWavBlob(buffer));
   updateMeta();
 }
